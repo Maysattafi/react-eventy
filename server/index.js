@@ -1,14 +1,19 @@
 import express from "express";
 import eventsRouter from "./routes/events.routes.js"
 import cors from "cors";
+import authRouter from "./routes/auth.routes.js"
+
 const app = express();
 const PORT = 3000;
 app.use(cors({ origin: "http://localhost:5173" }));
+app.use(express.json());
+
 app.get("/api/health", (req, res) => {
     console.log("health route called")
   res.json({ status: "ok" });
 });
 app.use("/api/events", eventsRouter);
+app.use("/api/auth", authRouter)
 
 
 
