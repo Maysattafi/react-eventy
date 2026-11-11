@@ -11,3 +11,10 @@ export async function findByEmail(email) {
   const [rows] = await pool.execute("select id_users,name,email,password,role from users where email= ?;",[email]);
   return rows[0]
 }
+export async function findUserById(id) {
+  const [rows] = await pool.execute(
+    "SELECT id_users, name, email, role FROM users WHERE id_users = ?",
+    [id]
+  );
+  return rows[0];
+}

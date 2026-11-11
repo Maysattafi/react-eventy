@@ -7,8 +7,21 @@ export async function findAll() {
   }
 
 export async function findById(id) {
-  // TODO 2: run the detail query and return ONE event,
-  //         or undefined when there is none
+
   const [rows] = await pool.execute("select id_event,titre,description,date_event,n_sale,image,category from events where id_event= ?;",[id]);
   return rows[0]
+}
+export async function remove(id) {
+  const [result] = await pool.execute(
+    "DELETE FROM events WHERE id_event = ?",
+    [id]
+  );
+  return result.affectedRows > 0;
+}
+export async function add({ titre, description, date_event, n_sale, category }) {
+  const [result] = await pool.execute(
+    "INSERT INTO events (titre, description, date_event, n_sale, image, category) VALUES (?, ?, ?, ?, '', ?)",
+    [titre, description, date_event, n_sale, category]
+  );
+  return result.insertId;
 }
